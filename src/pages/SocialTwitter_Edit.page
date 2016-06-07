@@ -1,0 +1,88 @@
+<apex:page controller="cms.CreateContentController" extensions="SocialTwitter"
+    showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+   <script>
+$(document).ready(init);
+
+function init() {
+    ce.content_editor('registerSaveFunction', getAttributes);
+
+    var isEnabled = ocmsEditorAPI.getEnabled();
+
+    $('#twitterHtml').val('{!JSENCODE(twitterHtml)}');
+    $('#useSingleLanguageConfiguration').prop('checked', {!useSingleLanguageConfiguration});
+
+    if(isEnabled) {
+        $('input, textarea').removeAttr('disabled');
+    }
+}
+
+function getAttributes() {
+    var attributes = [];
+
+    var useSingleLanguageConfiguration = $('#useSingleLanguageConfiguration').is(':checked');
+
+    attributes.push({
+        name: 'useSingleLanguageConfiguration',
+        value: useSingleLanguageConfiguration,
+        type: 'Boolean',
+        simple: true,
+        lang: ''
+    });
+
+    // Choose whether the Twitter HTML should be language-independent or not
+    if(useSingleLanguageConfiguration) {
+        attributes.push({
+            name: 'twitterHtml',
+            value: $('#twitterHtml').val(),
+            type: 'Text',
+            lang: ''
+        });
+    } else {
+        attributes.push({
+            name: 'twitterHtml',
+            value: $('#twitterHtml').val(),
+            type: 'Text'
+        });
+    }
+
+    return attributes;
+}
+    </script>
+
+    <form>
+        <table class="ocmsContentEditor ocmsContentEditorNested">
+            <tr>
+                <td>
+                    <p class="ocmsHelpText">
+                        To create a Twitter button, use Twitter's
+                        <a href="https://about.twitter.com/resources/buttons">button creation form</a>.
+                        Fill out the desired options and paste the embed code into the text input below.
+                    </p>
+                    <p class="ocmsHelpText">
+                        To create a Twitter feed, use Twitter's
+                        <a href="https://twitter.com/settings/widgets">widget manager</a>.
+                        Fill out the desired options and paste the embed code into the text input below.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="twitterHtml">Twitter Widget Code</label>
+                    <textarea id="twitterHtml" rows="5" cols="65" disabled="disabled"></textarea>
+                </td>
+            </tr>
+            <tr class="ocmsCheckForm">
+                <td>
+                    <ul>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="useSingleLanguageConfiguration" disabled="disabled" />
+                                Propagate this widget markup across all languages
+                            </label>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </form>
+</apex:page>

@@ -1,0 +1,181 @@
+<apex:page controller="cms.CreateContentController" extensions="SocialFacebook"
+    showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+    <script>
+$(document).ready(init);
+
+function init() {
+    ce.content_editor('registerSaveFunction', getAttributes);
+
+    var isEnabled = ocmsEditorAPI.getEnabled();
+
+    $('#appId').val('{!JSENCODE(appId)}');
+    $('#pageUrl').val('{!JSENCODE(pageUrl)}');
+    $('#pageShowTimelineTab').prop('checked', {!pageShowTimelineTab});
+    $('#pageShowEventsTab').prop('checked', {!pageShowEventsTab});
+    $('#pageShowMessagesTab').prop('checked', {!pageShowMessagesTab});
+    $('#pageUseSmallHeader').prop('checked', {!pageUseSmallHeader});
+    $('#pageUseAdaptiveWidth').prop('checked', {!pageUseAdaptiveWidth});
+    $('#pageHideCoverPhoto').prop('checked', {!pageHideCoverPhoto});
+    $('#pageShowFaces').prop('checked', {!pageShowFaces});
+
+    if(isEnabled) {
+        $('input, textarea, select').removeAttr('disabled');
+    }
+}
+
+function getAttributes() {
+    var attributes = [];
+
+    attributes.push({
+        name: 'appId',
+        value: $('#appId').val(),
+        type: 'Text',
+        simple: true,
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'pageUrl',
+        value: $('#pageUrl').val(),
+        type: 'Text'
+    });
+
+    attributes.push({
+        name: 'pageShowTimelineTab',
+        value: $('#pageShowTimelineTab').is(':checked').toString(),
+        type: 'Boolean',
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'pageShowEventsTab',
+        value: $('#pageShowEventsTab').is(':checked').toString(),
+        type: 'Boolean',
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'pageShowMessagesTab',
+        value: $('#pageShowMessagesTab').is(':checked').toString(),
+        type: 'Boolean',
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'pageUseSmallHeader',
+        value: $('#pageUseSmallHeader').is(':checked').toString(),
+        type: 'Boolean',
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'pageUseAdaptiveWidth',
+        value: $('#pageUseAdaptiveWidth').is(':checked').toString(),
+        type: 'Boolean',
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'pageHideCoverPhoto',
+        value: $('#pageHideCoverPhoto').is(':checked').toString(),
+        type: 'Boolean',
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'pageShowFaces',
+        value: $('#pageShowFaces').is(':checked').toString(),
+        type: 'Boolean',
+        lang: ''
+    });
+
+    return attributes;
+}
+    </script>
+
+    <form>
+        <table class="ocmsContentEditor ocmsContentEditorNested">
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="appId">Facebook App Id</label>
+                    <input class="ocmsTextInputLrg" type="text" id="appId" disabled="disabled" />
+                    <p class="ocmsHelpText">
+                        See <a href="https://developers.facebook.com">https://developers.facebook.com</a> for
+                        instructions on creating a Facebook app
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="pageUrl">Facebook Page URL</label>
+                    <input class="ocmsTextInputLrg" type="text" id="pageUrl" disabled="disabled" />
+                    <p class="ocmsHelpText">
+                        Example: <a href="https://www.facebook.com/facebook">https://www.facebook.com/facebook</a>
+                    </p>
+                </td>
+            </tr>
+
+            <tr class="ocmsEditorSubtitle">
+                <td>Tabs</td>
+            </tr>
+            <tr class="ocmsCheckForm">
+                <td>
+                    <ul>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="pageShowTimelineTab" disabled="disabled" />
+                                Show Timeline tab
+                            </label>
+                        </li>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="pageShowEventsTab" disabled="disabled" />
+                                Show Events tab
+                            </label>
+                        </li>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="pageShowMessagesTab" disabled="disabled" />
+                                Show Messages tab
+                            </label>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr class="ocmsEditorSubtitle">
+                <td>Options</td>
+            </tr>
+            <tr class="ocmsCheckForm">
+                <td>
+                    <ul>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="pageUseSmallHeader" disabled="disabled" />
+                                Use a smaller version of the page header
+                            </label>
+                        </li>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="pageUseAdaptiveWidth" disabled="disabled" />
+                                Adapt to container width
+                            </label>
+                        </li>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="pageHideCoverPhoto" disabled="disabled" />
+                                Hide the cover photo in the header
+                            </label>
+                        </li>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="pageShowFaces" disabled="disabled" />
+                                Show profile photos when friends like this
+                            </label>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </form>
+</apex:page>
