@@ -1,0 +1,155 @@
+<apex:page controller="cms.CreateContentController" extensions="SocialFacebook"
+    showHeader="false" sidebar="false" cache="false" standardStylesheets="false">
+    <script>
+$(document).ready(init);
+
+function init() {
+    ce.content_editor('registerSaveFunction', getAttributes);
+
+    var isEnabled = ocmsEditorAPI.getEnabled();
+
+    $('#appId').val('{!JSENCODE(appId)}');
+    $('#likeUrl').val('{!JSENCODE(likeUrl)}');
+    $('#likeWidth').val('{!likeWidth}');
+    $('#likeLayout option').filter(function() {
+        return $(this).prop('value') == '{!JSENCODE(likeLayout)}';
+    }).prop('selected', true);
+    $('#likeAction option').filter(function() {
+        return $(this).prop('value') == '{!JSENCODE(likeAction)}';
+    }).prop('selected', true);
+    $('#likeShowFaces').prop('checked', {!likeShowFaces});
+    $('#likeIncludeShare').prop('checked', {!likeIncludeShare});
+
+    if(isEnabled) {
+        $('input, textarea, select').removeAttr('disabled');
+    }
+}
+
+function getAttributes() {
+    var attributes = [];
+
+    attributes.push({
+        name: 'appId',
+        value: $('#appId').val(),
+        type: 'Text',
+        simple: true,
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'likeUrl',
+        value: $('#likeUrl').val(),
+        type: 'Text'
+    });
+
+    attributes.push({
+        name: 'likeWidth',
+        value: $('#likeWidth').val(),
+        type: 'Integer',
+        simple: true,
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'likeLayout',
+        value: $('#likeLayout :selected').val(),
+        type: 'Text',
+        simple: true,
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'likeAction',
+        value: $('#likeAction :selected').val(),
+        type: 'Text',
+        simple: true,
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'likeShowFaces',
+        value: $('#likeShowFaces').is(':checked'),
+        type: 'Boolean',
+        simple: true,
+        lang: ''
+    });
+
+    attributes.push({
+        name: 'likeIncludeShare',
+        value: $('#likeIncludeShare').is(':checked'),
+        type: 'Boolean',
+        simple: true,
+        lang: ''
+    });
+
+    return attributes;
+}
+    </script>
+
+    <form>
+        <table class="ocmsContentEditor ocmsContentEditorNested">
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="appId">Facebook App Id</label>
+                    <input class="ocmsTextInputLrg" type="text" id="appId" disabled="disabled" />
+                    <p class="ocmsHelpText">
+                        See <a href="https://developers.facebook.com">https://developers.facebook.com</a> for
+                        instructions on creating a Facebook app
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="likeUrl">URL to "Like"</label>
+                    <input class="ocmsTextInputLrg" type="text" id="likeUrl" disabled="disabled" />
+                    <p class="ocmsHelpText">Leave blank to automatically use the current page</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="likeWidth">Width in Pixels</label>
+                    <input class="ocmsTextInputLrg" type="number" id="likeWidth" disabled="disabled" min="0" />
+                    <p class="ocmsHelpText">Leave blank to automatically set the width</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="likeLayout">Layout Type</label>
+                    <select id="likeLayout" disabled="disabled">
+                        <option value="standard">Standard</option>
+                        <option value="box_count">Box Count</option>
+                        <option value="button_count">Button Count</option>
+                        <option value="button">Button</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="ocmsLabel" for="likeAction">Action</label>
+                    <select id="likeAction" disabled="disabled">
+                        <option value="like">Like</option>
+                        <option value="recommend">Recommend</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="ocmsCheckForm">
+                <td>
+                    <ul>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="likeShowFaces" disabled="disabled" />
+                                Show profile photos when 2 or more friends like this
+                            </label>
+                        </li>
+                        <li>
+                            <label class="ocmsLabel">
+                                <input type="checkbox" id="likeIncludeShare" disabled="disabled" />
+                                Includes a Share button beside the Like button
+                            </label>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </form>
+</apex:page>
