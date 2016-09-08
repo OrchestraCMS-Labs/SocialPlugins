@@ -32,7 +32,7 @@ global virtual with sharing class SocialTwitter extends cms.ContentTemplateContr
         if(Test.isRunningTest()) {
             return testAttributes.get(attributeName);
         } else {
-            return getAttribute(attributeName);
+            return getProperty(attributeName);
         }
     }
 

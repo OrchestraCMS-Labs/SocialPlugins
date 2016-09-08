@@ -233,7 +233,7 @@ global virtual with sharing class SocialFacebook extends cms.ContentTemplateCont
         if(Test.isRunningTest()) {
             return testAttributes.get(attributeName);
         } else {
-            return getAttribute(attributeName);
+            return getProperty(attributeName);
         }
     }
 
