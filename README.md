@@ -53,6 +53,11 @@ This content type requires a minimum of OrchestraCMS package 7.184 (Winter 2016,
     2. SocialFacebookPage_Edit.page
     3. SocialTwitter_Edit.page
 
+<a href="https://githubsfdeploy.herokuapp.com">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
+
 <a name="configuration"></a>
 ### Configuration
 
